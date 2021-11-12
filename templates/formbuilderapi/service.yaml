@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-formbuilderapi-service
+  labels:
+    app: {{ .Values.formbuilderapi.label.name }}
+spec:
+  ports:
+  - port: {{ .Values.formbuilderapi.service.port }}
+    protocol: TCP
+    targetPort: {{ .Values.formbuilderapi.container.port }}
+  selector:
+    app: {{ .Values.formbuilderapi.label.name }}
+  type: {{ .Values.formbuilderapi.service.type }}

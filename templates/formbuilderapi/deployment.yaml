@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-formbuilderapi-deployment
+  labels:
+    app: {{ .Values.formbuilderapi.label.name }}
+spec:
+  replicas: {{ .Values.formbuilderapi.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.formbuilderapi.label.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.formbuilderapi.label.name }}
+        environment: {{ .Values.environment }}
+    spec:
+      containers:
+        - name: {{ .Values.formbuilderapi.container.name }}
+          image: {{ .Values.formbuilderapi.container.image }}:{{ .Values.formbuilderapi.container.tag }}
+          imagePullPolicy: {{ .Values.formbuilderapi.container.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.formbuilderapi.container.port }}
+          env:
+            - name: apphost
+              value: {{ .Values.apphost }}
+            - name: appenvironment
+              value: {{ .Values.environment }}

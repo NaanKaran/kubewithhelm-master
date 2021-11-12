@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-dashboardapi-deployment
+  labels:
+    app: {{ .Values.dashboardapi.label.name }}
+spec:
+  replicas: {{ .Values.dashboardapi.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.dashboardapi.label.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.dashboardapi.label.name }}
+        environment: {{ .Values.environment }}
+    spec:
+      containers:
+        - name: {{ .Values.dashboardapi.container.name }}
+          image: {{ .Values.dashboardapi.container.image }}:{{ .Values.dashboardapi.container.tag }}
+          imagePullPolicy: {{ .Values.dashboardapi.container.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.dashboardapi.container.port }}
+          env:
+            - name: apphost
+              value: {{ .Values.apphost }}
+            - name: appenvironment
+              value: {{ .Values.environment }}

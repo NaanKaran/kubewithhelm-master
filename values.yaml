@@ -1,0 +1,67 @@
+environment: development
+
+apphost: k8s
+
+dashboardbuilderui:
+  label:
+    name: dashboardbuilderui
+
+  container:
+    name: dashboardbuilderui
+    pullPolicy: Always
+    image: deathstroke45/dashboardbuilderui
+    tag: latest
+    port: 8080
+  replicas: 1
+
+  service:
+    port: 8888
+    type: ClusterIP
+
+formbuilderui:
+  label:
+    name: formbuilderui
+
+  container:
+    name: formbuilderui
+    pullPolicy: Always
+    image: deathstroke45/formbuilderui
+    tag: latest
+    port: 8080
+  replicas: 1
+
+  service:
+    port: 8889
+    type: ClusterIP
+
+formbuilderapi:
+  label:
+    name: formbuilderapi
+
+  container:
+    name: formbuilderapi
+    pullPolicy: Always
+    image: deathstroke45/formbuilderapi
+    tag: latest
+    port: 80
+  replicas: 1
+
+  service:
+    port: 8887
+    type: ClusterIP
+
+dashboardapi:
+  label:
+    name: dashboardapi
+
+  container:
+    name: dashboardapi
+    pullPolicy: Always
+    image: deathstroke45/dashboardapi
+    tag: latest
+    port: 80
+  replicas: 1
+
+  service:
+    port: 8886
+    type: ClusterIP

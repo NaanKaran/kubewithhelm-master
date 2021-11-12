@@ -1,0 +1,47 @@
+# apiVersion: networking.istio.io/v1alpha3
+# kind: Gateway
+# metadata:
+#   name: gpmd
+# spec:
+#   selector:
+#     # Which pods we want to expose as Istio router
+#     # This label points to the default one installed from file istio-demo.yaml
+#     istio: ingressgateway
+#   servers:
+#   - port:
+#       number: 80
+#       name: http
+#       protocol: HTTP
+#     # Here we specify which Kubernetes service names
+#     # we want to serve through this Gateway
+#     hosts:
+#     - "*"
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: gpmd
+# spec:
+#   hosts:
+#   - "*"
+#   gateways:
+#   - gpmd
+#   http:
+#   - match:
+#     - uri:
+#         exact: "/dashboard"
+#     rewrite:
+#       uri: "/"
+#     route:
+#     - destination:
+#         host: gpmd-dashboardbuilderui-service
+#   - match:
+#     - uri:
+#         exact: "/"
+#     - uri:
+#         exact: "/forms"
+#     rewrite:
+#       uri: "/"
+#     route:
+#     - destination:
+#         host: gpmd-formbuilderui-service

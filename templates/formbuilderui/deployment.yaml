@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-formbuilderui-deployment
+  labels:
+    app: {{ .Values.formbuilderui.label.name }}
+spec:
+  replicas: {{ .Values.formbuilderui.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.formbuilderui.label.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.formbuilderui.label.name }}
+        environment: {{ .Values.environment }}
+    spec:
+      containers:
+        - name: {{ .Values.formbuilderui.container.name }}
+          image: {{ .Values.formbuilderui.container.image }}:{{ .Values.formbuilderui.container.tag }}
+          imagePullPolicy: {{ .Values.formbuilderui.container.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.formbuilderui.container.port }}
+          env:
+            - name: apphost
+              value: {{ .Values.apphost }}
+            - name: appenvironment
+              value: {{ .Values.environment }}

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-formbuilderui-service
+  labels:
+    app: {{ .Values.formbuilderui.label.name }}
+spec:
+  ports:
+  - port: {{ .Values.formbuilderui.service.port }}
+    protocol: TCP
+    targetPort: {{ .Values.formbuilderui.container.port }}
+  selector:
+    app: {{ .Values.formbuilderui.label.name }}
+  type: {{ .Values.formbuilderui.service.type }}
